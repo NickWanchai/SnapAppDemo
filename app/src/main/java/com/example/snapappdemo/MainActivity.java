@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements Updatable{
 
     //Denne knap skal fører dig til din tagbillede.
     public void TakePicturePressed(View view){
+        // vi laver her en Intent med en action, så vi kan påbne cameraet og tage et billede som skal retunere det.
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try{
             startActivityForResult(takePictureIntent, 1);
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements Updatable{
                 // her bliver der oprettet et Intet, hvor vi skal bruge
                 Intent snapIntent = new Intent(MainActivity.this, SnapOpen.class);
 
-                //extra tildeler udvidet data til intent og navn giver "id".
+                //extra tildeler udvidet data til intent og navn giver "id" som vi benytter i snapopen klassen.
                 snapIntent.putExtra("id", tempSnap.getId());
 
                 startActivity(snapIntent);
