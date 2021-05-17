@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity implements Updatable{
     public void MyProfilPressed(View view){
         System.out.println("MyProfil Is Pressed");
         //Intent er til for at vælge hvilken destination vi vil til, ved at declare this(objekt) fra en klasse(MyProfill)
-        Intent intet = new Intent(this, MyProfil.class);
+        Intent intent = new Intent(this, MyProfil.class);
         //når vi kalder på startActivity, vil vi starte en ny aktivitet med den intent som vi lavede ovenover
-        startActivity(intet);
+        startActivity(intent);
     }
 
     //Denne knap skal fører dig til din tagbillede.
@@ -82,10 +82,14 @@ public class MainActivity extends AppCompatActivity implements Updatable{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //Her opretter vi et opbjekt med postisiton fra items
                 Snap tempSnap = items.get(position);
 
+                // her bliver der oprettet et Intet, hvor vi skal bruge
                 Intent snapIntent = new Intent(MainActivity.this, SnapOpen.class);
 
+                //extra tildeler udvidet data til intent og navn giver "id".
                 snapIntent.putExtra("id", tempSnap.getId());
 
                 startActivity(snapIntent);
@@ -149,12 +153,6 @@ public class MainActivity extends AppCompatActivity implements Updatable{
         canvas.drawText(gText, 10, 100, paint);
         Repo.repo().uploadBitmap(image, gText);
     }
-
-//    @Override
-//    public void update(Object o) {
-//        System.out.println("trololololo for at se om den opdatere");
-//
-//    }
 
     //Denne knap skal føre dig til homepage.
     public void HomePagePressed(View view) {

@@ -45,16 +45,14 @@ public class MyAdapter extends BaseAdapter {
     @Override
     //for hver række vil vi få et layout som vi bestemmer hvad der skal ske med
     public View getView(int i, View view, ViewGroup viewGroup) {
-        //make layout .xml file first..
 
-        // tjekker her om tilstanden er null
         if(view == null){
             view = layoutInflater.inflate(R.layout.myrow, null);
         }
         LinearLayout linearLayout = (LinearLayout)view;
         TextView textView = view.findViewById(R.id.textView1);
         if(textView != null) {
-            textView.setText(items.get(i).getId()); //  vil forbinde til item listen senere
+            textView.setText(items.get(i).getId()); //  vil forbinde til item listen
         }
         return linearLayout;
     }

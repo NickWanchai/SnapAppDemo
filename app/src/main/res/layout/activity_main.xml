@@ -8,11 +8,12 @@
 
     <TextView
         android:id="@+id/SnapApp"
-        android:layout_width="105dp"
-        android:layout_height="43dp"
+        android:layout_width="153dp"
+        android:layout_height="46dp"
         android:text="SnapAPP"
         android:textAlignment="center"
         android:textColor="#FF0000"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -36,11 +37,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="24dp"
-        android:background="#2196F3"
+        android:backgroundTint="#2196F3"
         android:onClick="MyProfilPressed"
+        android:shadowColor="#CD1212"
         android:text="Profil"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="#C52E2E" />
 
     <ListView
         android:id="@+id/listView1"
@@ -75,6 +78,9 @@
         android:id="@+id/takePicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#F44336"
+        android:backgroundTintMode="src_atop"
+        android:hapticFeedbackEnabled="false"
         android:onClick="TakePicturePressed"
         android:text="Tag Billede"
         app:layout_constraintBottom_toBottomOf="parent"

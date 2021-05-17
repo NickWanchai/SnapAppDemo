@@ -37,33 +37,30 @@ public class Repo {
 
     }
 
-    public void setup2(List<Snap> list) {
-        snaps = list;
-        startListener();
-
-    }
-
 
     public void startListener(){
         db.collection(COLLECTION_PATH).addSnapshotListener((values, error) ->{
+            //Denne funktion clear alt vores data og lægger det nye ovenpå. På denne måde får vi ikke dupplicates
             snaps.clear();
             for(DocumentSnapshot snap: values.getDocuments()){
                     snaps.add(new Snap(snap.getId()));
-
             }
-            // have a reference to TakePicture, and call a update()
+            // have a reference to mainactivity, and call a update()
             activity.update(null);
         });
     }
 
     public void uploadBitmap(Bitmap bitmap, String imageText){
-        System.out.println("heheheheheh");
+        System.out.println("test");
+        // Vi laver en reference til et dokument i firebase som vi kalder doc
         DocumentReference doc = db.collection(COLLECTION_PATH).document();
+        // Herefter får vi lavet et Map, hvor vi sætter doc til at blive map fordi vi skal bruge key/value
         Map<String, String> map = new HashMap<>();
         doc.set(map);
         String id = doc.getId();
 
         StorageReference ref = storage.getReference(id);
+        //Vi ioretter Baoas for at converte data til byyes
         ByteArrayOutputStream baoas = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,baoas);
         ref.putBytes(baoas.toByteArray()).addOnCompleteListener(snap -> {
@@ -72,8 +69,6 @@ public class Repo {
             System.out.println("upload failed" + exception);
         });
     }
-
-
 
     public void downloadBitmap(String id, TaskListener taskListener){ // Skal bruges til at dl billede til listen på forside onClick
         StorageReference ref = storage.getReference(id);
@@ -88,8 +83,10 @@ public class Repo {
 
     //Metode til at slette når vi lukker aktiviteten
     public void deleteImage(Snap image){
+        //her laves en reference til et dokuments lokation i firebase, som vi vælger at slette efter
         DocumentReference documentReference = db.collection(COLLECTION_PATH).document(image.getId());
         documentReference.delete();
+        //her er en reference til et Google Cloud Storage object som vi så sletter på linjen under
         StorageReference storageReference = storage.getReference(image.getId());
         storageReference.delete();
     }
