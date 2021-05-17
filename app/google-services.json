@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "106182129780",
+    "project_id": "snapapp-bed76",
+    "storage_bucket": "snapapp-bed76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106182129780:android:c667b908c22f1568c07921",
+        "android_client_info": {
+          "package_name": "com.example.snapapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106182129780-3hk50mdjulbeiooio29lisptp7uti1ej.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-aSs0oP-hZWz1htefL-NEkbrZnc7hoxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106182129780-3hk50mdjulbeiooio29lisptp7uti1ej.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
