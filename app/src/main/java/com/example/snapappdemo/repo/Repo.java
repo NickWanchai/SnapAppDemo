@@ -1,6 +1,7 @@
 package com.example.snapappdemo.repo;
 
 import android.graphics.Bitmap;
+import android.widget.TextView;
 
 import com.example.snapappdemo.TaskListener;
 import com.example.snapappdemo.Updatable;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 public class Repo {
 
+    //med til at implementere signleton, så der kun er en kopi af dette objekt.
     private static Repo repo = new Repo();
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -27,6 +29,7 @@ public class Repo {
     private final String COLLECTION_PATH = "snaps";
     private Updatable activity;
 
+    //constuctor til singleton
     public static Repo repo() {
     return repo; }
 
@@ -36,7 +39,6 @@ public class Repo {
         startListener();
 
     }
-
 
     public void startListener(){
         db.collection(COLLECTION_PATH).addSnapshotListener((values, error) ->{
@@ -49,6 +51,25 @@ public class Repo {
             activity.update(null);
         });
     }
+
+//    // denne metode skal kaldes fra myProfil
+//    public void profilInfo(TextView usernameText, TextView nameText, TextView emailText, TextView biografiText){
+//        //indsæter info til din profil
+//        DocumentReference reference = db.collection("profil").document();
+//        Map<String, TextView> map = new HashMap<>();
+//        map.put("brugernavn", usernameText);
+//        reference.set(map);
+//        map.put("navn", nameText);
+//        reference.set(map);
+//        map.put("email", emailText);
+//        reference.set(map);
+//        map.put("biografi", biografiText);
+//        reference.set(map);
+//
+//        System.out.println("done med bruger info" + reference.getId());
+//    }
+
+    //_____________________________________________________________ upload/dl/delete metoder
 
     public void uploadBitmap(Bitmap bitmap, String imageText){
         System.out.println("test");
@@ -63,6 +84,7 @@ public class Repo {
         //Vi ioretter Baoas for at converte data til byyes
         ByteArrayOutputStream baoas = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,baoas);
+        //Her tjekkes der for om det bliver added eller ej med et lamda expression
         ref.putBytes(baoas.toByteArray()).addOnCompleteListener(snap -> {
             System.out.println("upload complete" + snap);
         }).addOnFailureListener(exception -> {
@@ -90,6 +112,9 @@ public class Repo {
         StorageReference storageReference = storage.getReference(image.getId());
         storageReference.delete();
     }
+//_________________________________________________________________________________________
+
+
 
 
 }

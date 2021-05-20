@@ -27,13 +27,14 @@ import com.example.snapappdemo.repo.Repo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements Updatable{
+public class MainActivity extends AppCompatActivity implements Updatable, View.OnClickListener{
 
     // skal have billeder fra db ind i denne liste
     List<Snap> items = new ArrayList<>();
 
     ListView listView;
     MyAdapter myAdapter;
+    Button profil;
     //Initialize variable
 
     @Override
@@ -47,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements Updatable{
         listView = findViewById(R.id.listView1);
         // vi impotere adapteren og vælger listen som parameter og "this" er context vi vælger som er den mest alm.
         myAdapter = new MyAdapter(items, this);
+
+        profil = findViewById(R.id.profil);
+        profil.setOnClickListener(this);
+
         listView.setAdapter(myAdapter);
         Repo.repo().setup(this, items);
         setupListView();
@@ -54,29 +59,44 @@ public class MainActivity extends AppCompatActivity implements Updatable{
 
     }
 
+    //_____________________________ METODER
+
+    @Override
     //Denne knap skal fører dig til din profil.
-    public void MyProfilPressed(View view){
-        System.out.println("MyProfil Is Pressed");
-        //Intent er til for at vælge hvilken destination vi vil til, ved at declare this(objekt) fra en klasse(MyProfill)
-        Intent intent = new Intent(this, MyProfil.class);
-        //når vi kalder på startActivity, vil vi starte en ny aktivitet med den intent som vi lavede ovenover
-        startActivity(intent);
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.profil:
+                //Intent er til for at vælge hvilken destination vi vil til, ved at declare this(objekt) fra en klasse(MyProfill)
+                //når vi kalder på startActivity, vil vi starte en ny aktivitet med den intent som vi lavede ovenover
+                startActivity(new Intent(this, MyProfil.class));
+                break;
+        }
+
     }
+
+//    //Denne knap skal fører dig til din profil.
+//    public void MyProfilPressed(View view){
+//        System.out.println("MyProfil Is Pressed");
+//        //Intent er til for at vælge hvilken destination vi vil til, ved at declare this(objekt) fra en klasse(MyProfill)
+//        Intent intent = new Intent(this, MyProfil.class);
+//        //når vi kalder på startActivity, vil vi starte en ny aktivitet med den intent som vi lavede ovenover
+//        startActivity(intent);
+//    }
 
     //Denne knap skal fører dig til din tagbillede.
     public void TakePicturePressed(View view){
-        // vi laver her en Intent med en action, så vi kan påbne cameraet og tage et billede som skal retunere det.
+        // vi laver her en Intent med en action, så vi kan åbne cameraet og tage et billede som skal retunere det.
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try{
             startActivityForResult(takePictureIntent, 1);
         } catch (ActivityNotFoundException e){
-            System.out.println("hej der er fejl");
+            System.out.println("error: du kan ikke tage billede pt");
         }
     }
 
 //____________________________________________________________________
 
-    //snapp ting
+
 
     private void setupListView(){
         //når man klikker vil vi gerne have den tager et "item" med et id fra listviewet fra db
@@ -101,26 +121,21 @@ public class MainActivity extends AppCompatActivity implements Updatable{
     }
 
 
-    @Override
-    public void update(Object o) {
-        myAdapter.notifyDataSetChanged();
-    }
+    //________________ Ting til at capture picture og indsætte text
+    // Skal måske flyttes til repo
 
-
-
-    //________________
 
     @Override
+    // denne skal tjekke om der er en requestCode for en aktivitet som er startet
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //hvis requestCode er den samme, så kan vi kalde insertTest metoden
         if (requestCode == 1) {
-            //get capture image
-            //Bitmap captureImage = (Bitmap) data.getExtras().get("data");
-            //set capture image to imageview
             insertText((Bitmap)data.getExtras().get("data"));
         }
     }
 
+    // denne metode er til for at lave tekst på et billede
     public void insertText(Bitmap image){
         //Laver pop op
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -150,15 +165,16 @@ public class MainActivity extends AppCompatActivity implements Updatable{
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);// new antialised Paint
         paint.setColor(Color.rgb(161, 161, 161));
         paint.setTextSize((int) (20)); // text size in pixels
-        paint.setShadowLayer(1f, 0f, 1f, Color.WHITE); // text shadow
+        paint.setShadowLayer(1f, 0f, 1f, Color.RED); // text shadow
         canvas.drawText(gText, 10, 100, paint);
         Repo.repo().uploadBitmap(image, gText);
     }
 
-    //Denne knap skal føre dig til homepage.
-    public void HomePagePressed(View view) {
-        //nu siger vi at vi er færdige med denne side og henviser os tilbage til start
-        finish();
+    //_________________________________________________
+
+    @Override
+    public void update(Object o) {
+        myAdapter.notifyDataSetChanged();
     }
 
 }

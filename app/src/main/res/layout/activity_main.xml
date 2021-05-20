@@ -32,7 +32,7 @@
         app:srcCompat="@drawable/grogu" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/profil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

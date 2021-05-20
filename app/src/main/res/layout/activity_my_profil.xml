@@ -7,10 +7,23 @@
     android:background="#FFFFFF"
     tools:context=".MyProfil">
 
+    <EditText
+        android:id="@+id/usernameText"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="Indtast Brugernavn"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
     <TextView
         android:id="@+id/myProfil"
-        android:layout_width="168dp"
-        android:layout_height="42dp"
+        android:layout_width="170dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="casual"
         android:text="Min Profil"
         android:textAlignment="center"
@@ -18,73 +31,67 @@
         android:textColor="#F44336"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.087" />
-
-    <Button
-        android:id="@+id/homeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="16dp"
-        android:onClick="HomePagePressed"
-        android:text="Hjem"
-        app:iconTint="#03A9F4"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/nameText"
-        android:layout_width="313dp"
-        android:layout_height="46dp"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="25dp"
         android:ems="10"
+        android:hint="Indtast navn"
         android:inputType="text"
-        android:text="name"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/name"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.456" />
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="60dp"
-        android:layout_height="31dp"
-        android:text="Navn"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.458" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameText" />
+
+    <EditText
+        android:id="@+id/bioText"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Biografi"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailText" />
+
+    <EditText
+        android:id="@+id/emailText"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="Indtast email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="177dp"
         android:layout_height="167dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.223"
+        app:layout_constraintTop_toBottomOf="@+id/myProfil"
         app:srcCompat="@drawable/grogu" />
 
     <Button
-        android:id="@+id/saveProfil"
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:onClick="SaveProfilPressed"
-        android:text="Save"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="44dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.547" />
+        app:layout_constraintTop_toBottomOf="@+id/bioText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
