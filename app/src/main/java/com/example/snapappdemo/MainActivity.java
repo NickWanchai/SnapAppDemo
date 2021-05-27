@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.View;
@@ -23,11 +24,13 @@ import android.widget.ListView;
 import com.example.snapappdemo.adapter.MyAdapter;
 import com.example.snapappdemo.model.Snap;
 import com.example.snapappdemo.repo.Repo;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements Updatable, View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements Updatable{
 
     // skal have billeder fra db ind i denne liste
     List<Snap> items = new ArrayList<>();
@@ -50,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements Updatable, View.O
         myAdapter = new MyAdapter(items, this);
 
         profil = findViewById(R.id.profil);
-        profil.setOnClickListener(this);
 
         listView.setAdapter(myAdapter);
         Repo.repo().setup(this, items);
@@ -61,27 +63,19 @@ public class MainActivity extends AppCompatActivity implements Updatable, View.O
 
     //_____________________________ METODER
 
-    @Override
+
     //Denne knap skal fører dig til din profil.
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.profil:
-                //Intent er til for at vælge hvilken destination vi vil til, ved at declare this(objekt) fra en klasse(MyProfill)
-                //når vi kalder på startActivity, vil vi starte en ny aktivitet med den intent som vi lavede ovenover
-                startActivity(new Intent(this, MyProfil.class));
-                break;
-        }
+    public void MyProfilPressed(View view){
 
+
+
+        System.out.println("MyProfil Is Pressed");
+        //Intent er til for at vælge hvilken destination vi vil til, ved at declare this(objekt) fra en klasse(MyProfill)
+        Intent intent = new Intent(this, MyProfil.class);
+
+        //når vi kalder på startActivity, vil vi starte en ny aktivitet med den intent som vi lavede ovenover
+        startActivity(intent);
     }
-
-//    //Denne knap skal fører dig til din profil.
-//    public void MyProfilPressed(View view){
-//        System.out.println("MyProfil Is Pressed");
-//        //Intent er til for at vælge hvilken destination vi vil til, ved at declare this(objekt) fra en klasse(MyProfill)
-//        Intent intent = new Intent(this, MyProfil.class);
-//        //når vi kalder på startActivity, vil vi starte en ny aktivitet med den intent som vi lavede ovenover
-//        startActivity(intent);
-//    }
 
     //Denne knap skal fører dig til din tagbillede.
     public void TakePicturePressed(View view){
@@ -94,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements Updatable, View.O
         }
     }
 
+    
 //____________________________________________________________________
 
 
