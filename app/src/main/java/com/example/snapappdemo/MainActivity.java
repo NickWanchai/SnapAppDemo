@@ -1,8 +1,10 @@
 package com.example.snapappdemo;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -11,24 +13,24 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.snapappdemo.adapter.MyAdapter;
 import com.example.snapappdemo.model.Snap;
 import com.example.snapappdemo.repo.Repo;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static androidx.navigation.Navigation.findNavController;
 
 public class MainActivity extends AppCompatActivity implements Updatable{
 
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements Updatable{
 
     ListView listView;
     MyAdapter myAdapter;
-    Button profil;
+
     //Initialize variable
 
     @Override
@@ -52,44 +54,49 @@ public class MainActivity extends AppCompatActivity implements Updatable{
         // vi impotere adapteren og vælger listen som parameter og "this" er context vi vælger som er den mest alm.
         myAdapter = new MyAdapter(items, this);
 
-        profil = findViewById(R.id.profil);
-
         listView.setAdapter(myAdapter);
         Repo.repo().setup(this, items);
         setupListView();
 
+        // navigation bar
+        BottomNavigationView navigationView = findViewById(R.id.bottomNavigationView);
+        navigationView.setSelectedItemId(R.id.home);
+        navigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.home:
+                    return true;
+                case R.id.profil:
+                    Intent intent = new Intent(MainActivity.this, MyProfil.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.takePicture:
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    try{
+                        //request code er til for at finde ud af hvem anmodningen kommer fra
+                        startActivityForResult(takePictureIntent, 1);
+                    } catch (ActivityNotFoundException e){
+                        System.out.println("error: du kan ikke tage billede pt");
+                    }
+                    return true;
+
+            }
+            return false;
+        });
 
     }
 
     //_____________________________ METODER
 
-
-    //Denne knap skal fører dig til din profil.
-    public void MyProfilPressed(View view){
-
-
-
-        System.out.println("MyProfil Is Pressed");
-        //Intent er til for at vælge hvilken destination vi vil til, ved at declare this(objekt) fra en klasse(MyProfill)
-        Intent intent = new Intent(this, MyProfil.class);
-
-        //når vi kalder på startActivity, vil vi starte en ny aktivitet med den intent som vi lavede ovenover
-        startActivity(intent);
-    }
-
-    //Denne knap skal fører dig til din tagbillede.
-    public void TakePicturePressed(View view){
-        // vi laver her en Intent med en action, så vi kan åbne cameraet og tage et billede som skal retunere det.
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try{
-            startActivityForResult(takePictureIntent, 1);
-        } catch (ActivityNotFoundException e){
-            System.out.println("error: du kan ikke tage billede pt");
-        }
-    }
-
-    
-//____________________________________________________________________
+//    //Denne knap skal fører dig til din tagbillede.
+//    public void TakePicturePressed(View view){
+//        // vi laver her en Intent med en action, så vi kan åbne cameraet og tage et billede som skal retunere det.
+//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        try{
+//            startActivityForResult(takePictureIntent, 1);
+//        } catch (ActivityNotFoundException e){
+//            System.out.println("error: du kan ikke tage billede pt");
+//        }
+//    }
 
 
 

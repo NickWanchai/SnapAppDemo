@@ -8,17 +8,19 @@
 
     <TextView
         android:id="@+id/SnapApp"
-        android:layout_width="153dp"
-        android:layout_height="46dp"
+        android:layout_width="154dp"
+        android:layout_height="44dp"
+        android:background="#FFFFFF"
         android:text="SnapAPP"
         android:textAlignment="center"
         android:textColor="#FF0000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.548"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.059" />
+        app:layout_constraintVertical_bias="0.084" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -31,20 +33,6 @@
         app:layout_constraintVertical_bias="0.233"
         app:srcCompat="@drawable/grogu" />
 
-    <Button
-        android:id="@+id/profil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="#2196F3"
-        android:onClick="MyProfilPressed"
-        android:shadowColor="#CD1212"
-        android:text="Profil"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="#C52E2E" />
-
     <ListView
         android:id="@+id/listView1"
         android:layout_width="222dp"
@@ -56,7 +44,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.799" />
+        app:layout_constraintVertical_bias="0.777" />
 
     <TextView
         android:id="@+id/textView"
@@ -74,20 +62,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.53" />
 
-    <Button
-        android:id="@+id/takePicture"
-        android:layout_width="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#F44336"
-        android:backgroundTintMode="src_atop"
-        android:hapticFeedbackEnabled="false"
-        android:onClick="TakePicturePressed"
-        android:text="Tag Billede"
+        android:background="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.943"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.964" />
+        app:menu="@menu/bottom_home"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+

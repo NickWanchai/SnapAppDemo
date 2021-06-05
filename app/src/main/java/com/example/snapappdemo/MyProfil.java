@@ -1,9 +1,14 @@
 package com.example.snapappdemo;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +35,6 @@ public class MyProfil extends AppCompatActivity{
         emailEditText = findViewById(R.id.emailText);
         bioEditText = findViewById(R.id.bioText);
 
-
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -53,8 +57,31 @@ public class MyProfil extends AppCompatActivity{
             }
         });
 
-    }
+        // navigation bar
+        BottomNavigationView navigationView = findViewById(R.id.bottomNavigationView);
+        navigationView.setSelectedItemId(R.id.profil);
+        navigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.profil:
+                    return true;
+                case R.id.home:
+                    Intent intent = new Intent(MyProfil.this, MainActivity.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.takePicture:
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    try{
+                        //request code er til for at finde ud af hvem anmodningen kommer fra
+                        startActivityForResult(takePictureIntent, 1);
+                    } catch (ActivityNotFoundException e){
+                        System.out.println("error: du kan ikke tage billede pt");
+                    }
+                    return true;
+            }
+            return false;
+        });
 
+    }
 
     // denne metode er til for at gemme data fra felter i DB-realtime
     public void SaveProfilPressed(View view){
@@ -74,6 +101,8 @@ public class MyProfil extends AppCompatActivity{
 
         System.out.println("færdig");
     }
+
+
 
 
 }

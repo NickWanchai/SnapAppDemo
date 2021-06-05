@@ -52,23 +52,6 @@ public class Repo {
         });
     }
 
-//    // denne metode skal kaldes fra myProfil
-//    public void profilInfo(TextView usernameText, TextView nameText, TextView emailText, TextView biografiText){
-//        //indsæter info til din profil
-//        DocumentReference reference = db.collection("profil").document();
-//        Map<String, TextView> map = new HashMap<>();
-//        map.put("brugernavn", usernameText);
-//        reference.set(map);
-//        map.put("navn", nameText);
-//        reference.set(map);
-//        map.put("email", emailText);
-//        reference.set(map);
-//        map.put("biografi", biografiText);
-//        reference.set(map);
-//
-//        System.out.println("done med bruger info" + reference.getId());
-//    }
-
     //_____________________________________________________________ upload/dl/delete metoder
 
     public void uploadBitmap(Bitmap bitmap, String imageText){
