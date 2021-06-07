@@ -1,7 +1,6 @@
 package com.example.snapappdemo.repo;
 
 import android.graphics.Bitmap;
-import android.widget.TextView;
 
 import com.example.snapappdemo.TaskListener;
 import com.example.snapappdemo.Updatable;
@@ -22,9 +21,9 @@ public class Repo {
 
     //med til at implementere signleton, så der kun er en kopi af dette objekt.
     private static Repo repo = new Repo();
-
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseStorage storage = FirebaseStorage.getInstance();
+
     public List<Snap> snaps = new ArrayList<>();
     private final String COLLECTION_PATH = "snaps";
     private Updatable activity;
@@ -33,6 +32,7 @@ public class Repo {
     public static Repo repo() {
     return repo; }
 
+    //denne bliver kaldt i MainActivity
     public void setup(Updatable a, List<Snap> list) {
         activity = a;
         snaps = list;
@@ -44,6 +44,7 @@ public class Repo {
         db.collection(COLLECTION_PATH).addSnapshotListener((values, error) ->{
             //Denne funktion clear alt vores data og lægger det nye ovenpå. På denne måde får vi ikke dupplicates
             snaps.clear();
+            //herefter indsættes et nyt Snap med dets id
             for(DocumentSnapshot snap: values.getDocuments()){
                     snaps.add(new Snap(snap.getId()));
             }
@@ -64,7 +65,7 @@ public class Repo {
         String id = doc.getId();
 
         StorageReference ref = storage.getReference(id);
-        //Vi ioretter Baoas for at converte data til byyes
+        //Vi opretter Baoas for at converte data til bytes
         ByteArrayOutputStream baoas = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,baoas);
         //Her tjekkes der for om det bliver added eller ej med et lamda expression

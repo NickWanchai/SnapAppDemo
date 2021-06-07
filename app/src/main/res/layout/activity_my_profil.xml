@@ -7,23 +7,48 @@
     android:background="#FFFFFF"
     tools:context=".MyProfil">
 
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="85dp"
+        android:layout_height="20dp"
+        android:text="Email"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailText" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="85dp"
+        android:layout_height="20dp"
+        android:text="Navn"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameText" />
+
     <EditText
         android:id="@+id/usernameText"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Indtast Brugernavn"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/changePhoto" />
 
     <TextView
         android:id="@+id/myProfil"
         android:layout_width="170dp"
         android:layout_height="45dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="casual"
         android:text="Min Profil"
         android:textAlignment="center"
@@ -32,6 +57,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,19 +65,20 @@
         android:id="@+id/nameText"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Indtast navn"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameText" />
+        app:layout_constraintTop_toBottomOf="@+id/brugernavn" />
 
     <EditText
         android:id="@+id/bioText"
-        android:layout_width="300dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="288dp"
+        android:layout_height="117dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Biografi"
@@ -59,41 +86,58 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailText" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+
+    <TextView
+        android:id="@+id/biografi"
+        android:layout_width="85dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="3dp"
+        android:text="Biografi"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bioText" />
 
     <EditText
         android:id="@+id/emailText"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Indtast email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameText" />
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="160dp"
-        android:layout_height="141dp"
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileImage"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:layout_marginTop="16dp"
+        android:src="@drawable/grogu"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myProfil"
-        app:srcCompat="@drawable/grogu" />
+        app:layout_constraintTop_toBottomOf="@+id/myProfil" />
 
     <Button
         android:id="@+id/SaveProfilPressed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="98dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#F44336"
         android:onClick="SaveProfilPressed"
-        android:text="Save"
+        android:text="Gem"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bioText" />
+        app:layout_constraintTop_toBottomOf="@+id/biografi" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -103,6 +147,44 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_home"/>
+        app:menu="@menu/bottom_home" />
+
+    <TextView
+        android:id="@+id/brugernavn"
+        android:layout_width="85dp"
+        android:layout_height="20dp"
+        android:text="Brugernavn"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameText" />
+
+    <Button
+        android:id="@+id/changePhoto"
+        android:layout_width="208dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Skift billede"
+        android:textColor="#000000"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+
+    <Button
+        android:id="@+id/savePic"
+        android:layout_width="67dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="172dp"
+        android:text="gem"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.228"
+        app:layout_constraintStart_toEndOf="@+id/changePhoto"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

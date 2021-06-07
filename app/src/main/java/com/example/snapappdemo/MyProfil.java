@@ -7,7 +7,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,14 +16,18 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class MyProfil extends AppCompatActivity {
 
     //redigere i tekst
     private EditText usernameEditText, nameEditText, emailEditText, bioEditText;
     private BottomNavigationView navigationView;
+
+    //forbindelse til Realtime DB
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference reference = db.getReference().child("Profil");
 
+    //________________________________________________________________ til at ændre billede
 
 
     @Override
@@ -33,37 +36,18 @@ public class MyProfil extends AppCompatActivity {
         setContentView(R.layout.activity_my_profil);
 
         navbar();
+        ShowProfilInfo();
 
+        //her initalizere jeg editText til det ID i XML
         usernameEditText = findViewById(R.id.usernameText);
         nameEditText = findViewById(R.id.nameText);
         emailEditText = findViewById(R.id.emailText);
         bioEditText = findViewById(R.id.bioText);
 
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-
-                String username = snapshot.child("username").getValue(String.class);
-                String name = snapshot.child("name").getValue(String.class);
-                String email = snapshot.child("email").getValue(String.class);
-                String biografi = snapshot.child("biografi").getValue(String.class);
-
-                usernameEditText.setText(username);
-                nameEditText.setText(name);
-                emailEditText.setText(email);
-                bioEditText.setText(biografi);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                System.out.println("The read failed: " + error.getCode());
-
-            }
-        });
-
-
     }
+
+    //___________________ METODER______________________
+
 
     // navigation bar
     private void navbar(){
@@ -93,8 +77,37 @@ public class MyProfil extends AppCompatActivity {
     });
 }
 
+    public void ShowProfilInfo() {
+        //denne metode er til for at læse fra database
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            //En DataSnapshot-intance indeholder data fra Firebase.
+            // Hver gang du læser databasedata, modtager du dataene som et DataSnapshot.
+            public void onDataChange(DataSnapshot snapshot) {
 
-    // denne metode er til for at gemme data fra felter i DB-realtime
+                String username = snapshot.child("username").getValue(String.class);
+                String name = snapshot.child("name").getValue(String.class);
+                String email = snapshot.child("email").getValue(String.class);
+                String biografi = snapshot.child("biografi").getValue(String.class);
+
+                usernameEditText.setText(username);
+                nameEditText.setText(name);
+                emailEditText.setText(email);
+                bioEditText.setText(biografi);
+
+            }
+
+            @Override
+            //hvis noget går galt, kommer denne fejl
+            public void onCancelled(DatabaseError error) {
+                System.out.println("Kunne ikke læse data: " + error.getCode());
+
+            }
+        });
+    }
+
+
+    // denne metode er til for at gemme data fra felter til DB-realtime
     public void SaveProfilPressed(View view){
         String username = usernameEditText.getText().toString();
         String name = nameEditText.getText().toString();
@@ -113,7 +126,12 @@ public class MyProfil extends AppCompatActivity {
         System.out.println("færdig");
     }
 
+    //Denne knap skal fører dig til din tagbillede.
+    public void ChangePhoto(View view){
 
+
+
+    }
 
 
 }

@@ -1,10 +1,8 @@
 package com.example.snapappdemo;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -15,17 +13,21 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.snapappdemo.adapter.MyAdapter;
 import com.example.snapappdemo.model.Snap;
 import com.example.snapappdemo.repo.Repo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +41,21 @@ public class MainActivity extends AppCompatActivity implements Updatable{
     ListView listView;
     MyAdapter myAdapter;
     BottomNavigationView navigationView;
+    TextView userNameAndName, userInfo;
+
+    //forbindelse til Realtime DB
+    private FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private DatabaseReference reference = db.getReference().child("Profil");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //bruges til info på startside
+        userNameAndName = findViewById(R.id.usernameText2);
+        userInfo = findViewById(R.id.Text3);
+
 
         //vi skal lave en forbindelse til listView her.
         //R kompiler hele tiden, så f.eks hvergang der bliver lavet en knap rekompiler den klassen.
@@ -51,15 +63,15 @@ public class MainActivity extends AppCompatActivity implements Updatable{
         listView = findViewById(R.id.listView1);
         // vi impotere adapteren og vælger listen som parameter og "this" er context vi vælger som er den mest alm.
         myAdapter = new MyAdapter(items, this);
-
         listView.setAdapter(myAdapter);
         navBar();
         Repo.repo().setup(this, items);
         setupListView();
+        showProfilInfo();
 
     }
 
-    //_____________________________ METODER
+    //___________________ METODER______________________
 
 //    //Denne knap skal fører dig til din tagbillede.
 //    public void TakePicturePressed(View view){
@@ -71,6 +83,29 @@ public class MainActivity extends AppCompatActivity implements Updatable{
 //            System.out.println("error: du kan ikke tage billede pt");
 //        }
 //    }
+
+    public void showProfilInfo() {
+        //denne metode er til for at læse fra database
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                String username = snapshot.child("username").getValue(String.class);
+                String name = snapshot.child("name").getValue(String.class);
+                String biografi = snapshot.child("biografi").getValue(String.class);
+
+                userNameAndName.setText(username + "\n" + name);
+                userInfo.setText(biografi);
+            }
+            @Override
+            //hvis noget går galt, kommer denne fejl
+            public void onCancelled(DatabaseError error) {
+                System.out.println("Kunne ikke læse data: " + error.getCode());
+
+            }
+        });
+    }
+
 
     //navigation bar
     private void navBar(){
@@ -99,31 +134,7 @@ public class MainActivity extends AppCompatActivity implements Updatable{
         });
     }
 
-
-    private void setupListView(){
-        //når man klikker vil vi gerne have den tager et "item" med et id fra listviewet fra db
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                //Her opretter vi et opbjekt med postisiton fra items
-                Snap tempSnap = items.get(position);
-
-                // her bliver der oprettet et Intet, hvor vi skal bruge
-                Intent snapIntent = new Intent(MainActivity.this, SnapOpen.class);
-
-                //extra tildeler udvidet data til intent og navn giver "id" som vi benytter i snapopen klassen.
-                snapIntent.putExtra("id", tempSnap.getId());
-
-                startActivity(snapIntent);
-
-
-            }
-        });
-    }
-
-
-    //________________ Ting til at capture picture og indsætte text
+    //Ting til at capture picture og indsætte text
     // Skal måske flyttes til repo
 
 
@@ -131,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements Updatable{
     // denne skal tjekke om der er en requestCode for en aktivitet som er startet
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //hvis requestCode er den samme, så kan vi kalde insertTest metoden
+        //hvis requestCode er den samme som npr vi åbner kameraet, så kan vi kalde insertTest metoden
         if (requestCode == 1) {
             insertText((Bitmap)data.getExtras().get("data"));
         }
@@ -139,10 +150,11 @@ public class MainActivity extends AppCompatActivity implements Updatable{
 
     // denne metode er til for at lave tekst på et billede
     public void insertText(Bitmap image){
-        //Laver pop op
+        //Laver pop op med en text
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Indsæt text");
 
+        //her er det muligt at gøre så man kan skrive i teksten
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
@@ -150,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements Updatable{
         builder.setPositiveButton("OK", ((dialog, which) -> insertTextToBitmap(image, input.getText().toString())));
         builder.setNegativeButton("Annuller", (dialog, which) -> dialog.cancel());
 
+        // for alarmen
         builder.show();
 
     }
@@ -173,6 +186,31 @@ public class MainActivity extends AppCompatActivity implements Updatable{
     }
 
     //_________________________________________________
+
+    //Når vi skal åbne et billede
+    private void setupListView(){
+        //når man klikker vil vi gerne have den tager et "item" med et id fra listviewet fra db
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //Her opretter vi et opbjekt med postisiton fra items
+                Snap tempSnap = items.get(position);
+
+                // her bliver der oprettet et Intet, hvor vi siger vi er i Main og vil til SnapOpen
+                Intent snapIntent = new Intent(MainActivity.this, SnapOpen.class);
+
+                //Her tildeles et id, således vi kan "getID" når et billede åbnes
+                //som bruges i snapOpen klassen
+                snapIntent.putExtra("id", tempSnap.getId());
+
+                startActivity(snapIntent);
+
+
+            }
+        });
+    }
+
 
     @Override
     public void update(Object o) {

@@ -20,15 +20,19 @@ public class SnapOpen extends AppCompatActivity implements TaskListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snap_open);
+
         //her skal vi finde og dl vores image fra snap_open xml
         imageViewSnap = findViewById(R.id.imageViewSnap);
-        //Intent er til for at vælge hvilken destination vi vil til, ved at declare this(objekt) fra en klasse(MyProfill)
+        //Denne Intent retunere den Intent som startede denne aktivitet
         Intent intent = getIntent();
 
+        //Her vil vi have fat i det id vores snapIntent har, og hente data
         snap = new Snap(intent.getStringExtra("id"));
         System.out.println(snap.getId());
 
+        //Denne metode downloader billedet, ved at buge dets if.
         Repo.repo().downloadBitmap(snap.getId(), this);
+
     }
 
     // skal "ødelægge" det billede(objekt) som vi åbner (snap)
