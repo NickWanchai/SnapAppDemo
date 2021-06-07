@@ -36,11 +36,9 @@ public class MainActivity extends AppCompatActivity implements Updatable{
 
     // skal have billeder fra db ind i denne liste
     List<Snap> items = new ArrayList<>();
-
     ListView listView;
     MyAdapter myAdapter;
-
-    //Initialize variable
+    BottomNavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,33 +53,9 @@ public class MainActivity extends AppCompatActivity implements Updatable{
         myAdapter = new MyAdapter(items, this);
 
         listView.setAdapter(myAdapter);
+        navBar();
         Repo.repo().setup(this, items);
         setupListView();
-
-        // navigation bar
-        BottomNavigationView navigationView = findViewById(R.id.bottomNavigationView);
-        navigationView.setSelectedItemId(R.id.home);
-        navigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.home:
-                    return true;
-                case R.id.profil:
-                    Intent intent = new Intent(MainActivity.this, MyProfil.class);
-                    startActivity(intent);
-                    return true;
-                case R.id.takePicture:
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    try{
-                        //request code er til for at finde ud af hvem anmodningen kommer fra
-                        startActivityForResult(takePictureIntent, 1);
-                    } catch (ActivityNotFoundException e){
-                        System.out.println("error: du kan ikke tage billede pt");
-                    }
-                    return true;
-
-            }
-            return false;
-        });
 
     }
 
@@ -98,6 +72,32 @@ public class MainActivity extends AppCompatActivity implements Updatable{
 //        }
 //    }
 
+    //navigation bar
+    private void navBar(){
+        navigationView = findViewById(R.id.bottomNavigationView);
+        navigationView.setSelectedItemId(R.id.home);
+        navigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.home:
+                    return true;
+                case R.id.profil:
+                    Intent intent = new Intent(MainActivity.this, MyProfil.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.takePicture:
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    try {
+                        //request code er til for at finde ud af hvem anmodningen kommer fra
+                        startActivityForResult(takePictureIntent, 1);
+                    } catch (ActivityNotFoundException e) {
+                        System.out.println("error: du kan ikke tage billede pt");
+                    }
+                    return true;
+
+            }
+            return false;
+        });
+    }
 
 
     private void setupListView(){

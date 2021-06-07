@@ -17,18 +17,22 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyProfil extends AppCompatActivity{
+public class MyProfil extends AppCompatActivity {
 
     //redigere i tekst
     private EditText usernameEditText, nameEditText, emailEditText, bioEditText;
+    private BottomNavigationView navigationView;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference reference = db.getReference().child("Profil");
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profil);
+
+        navbar();
 
         usernameEditText = findViewById(R.id.usernameText);
         nameEditText = findViewById(R.id.nameText);
@@ -50,6 +54,7 @@ public class MyProfil extends AppCompatActivity{
                 bioEditText.setText(biografi);
 
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
                 System.out.println("The read failed: " + error.getCode());
@@ -57,31 +62,37 @@ public class MyProfil extends AppCompatActivity{
             }
         });
 
-        // navigation bar
-        BottomNavigationView navigationView = findViewById(R.id.bottomNavigationView);
-        navigationView.setSelectedItemId(R.id.profil);
-        navigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.profil:
-                    return true;
-                case R.id.home:
-                    Intent intent = new Intent(MyProfil.this, MainActivity.class);
-                    startActivity(intent);
-                    return true;
-                case R.id.takePicture:
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    try{
-                        //request code er til for at finde ud af hvem anmodningen kommer fra
-                        startActivityForResult(takePictureIntent, 1);
-                    } catch (ActivityNotFoundException e){
-                        System.out.println("error: du kan ikke tage billede pt");
-                    }
-                    return true;
-            }
-            return false;
-        });
 
     }
+
+    // navigation bar
+    private void navbar(){
+        navigationView = findViewById(R.id.bottomNavigationView);
+        navigationView.setSelectedItemId(R.id.profil);
+        navigationView.setOnNavigationItemSelectedListener(item ->
+
+    {
+        switch (item.getItemId()) {
+            case R.id.profil:
+                return true;
+            case R.id.home:
+                Intent intent = new Intent(MyProfil.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.takePicture:
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                try {
+                    //request code er til for at finde ud af hvem anmodningen kommer fra
+                    startActivityForResult(takePictureIntent, 1);
+                } catch (ActivityNotFoundException e) {
+                    System.out.println("error: du kan ikke tage billede pt");
+                }
+                return true;
+        }
+        return false;
+    });
+}
+
 
     // denne metode er til for at gemme data fra felter i DB-realtime
     public void SaveProfilPressed(View view){
