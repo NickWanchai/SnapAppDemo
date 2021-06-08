@@ -56,11 +56,12 @@ public class Repo {
     //_____________________________________________________________ upload/dl/delete metoder
 
     public void uploadBitmap(Bitmap bitmap, String imageText){
-        System.out.println("test");
+
         // Vi laver en reference til et dokument i firebase som vi kalder doc
         DocumentReference doc = db.collection(COLLECTION_PATH).document();
         // Herefter får vi lavet et Map, hvor vi sætter doc til at blive map fordi vi skal bruge key/value
         Map<String, String> map = new HashMap<>();
+        // jeg vælger at sende et tomt map videre, fordi jeg ikke har brug for teksten i db
         doc.set(map);
         String id = doc.getId();
 

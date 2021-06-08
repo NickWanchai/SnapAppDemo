@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements Updatable{
     List<Snap> items = new ArrayList<>();
     ListView listView;
     MyAdapter myAdapter;
+
     BottomNavigationView navigationView;
     TextView userNameAndName, userInfo;
 
@@ -178,9 +179,9 @@ public class MainActivity extends AppCompatActivity implements Updatable{
         image = image.copy(bitmapConfig, true);
         Canvas canvas = new Canvas(image);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);// new antialised Paint
-        paint.setColor(Color.rgb(161, 161, 161));
+        paint.setColor(Color.rgb(0, 0, 0));
         paint.setTextSize((int) (20)); // text size in pixels
-        paint.setShadowLayer(1f, 0f, 1f, Color.RED); // text shadow
+        paint.setShadowLayer(1f, 0f, 1f, Color.WHITE); // text shadow
         canvas.drawText(gText, 10, 100, paint);
         Repo.repo().uploadBitmap(image, gText);
     }
