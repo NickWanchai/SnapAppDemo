@@ -68,6 +68,7 @@ public class Repo {
         StorageReference ref = storage.getReference(id);
         //Vi opretter Baoas for at converte data til bytes
         ByteArrayOutputStream baoas = new ByteArrayOutputStream();
+        // jer compresser vi bipmap indtil et jpeg
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,baoas);
         //Her tjekkes der for om det bliver added eller ej med et lamda expression
         ref.putBytes(baoas.toByteArray()).addOnCompleteListener(snap -> {

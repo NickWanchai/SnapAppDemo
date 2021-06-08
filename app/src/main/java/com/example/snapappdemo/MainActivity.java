@@ -143,9 +143,11 @@ public class MainActivity extends AppCompatActivity implements Updatable{
     // denne skal tjekke om der er en requestCode for en aktivitet som er startet
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //hvis requestCode er den samme som npr vi åbner kameraet, så kan vi kalde insertTest metoden
+        //hvis requestCode er den samme som npr vi åbner kameraet, så kan vi få insertTest metoden på bitmap
         if (requestCode == 1) {
             insertText((Bitmap)data.getExtras().get("data"));
+            System.out.println("Bitmap: " + (Bitmap)data.getExtras().get("data"));
+
         }
     }
 
@@ -168,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements Updatable{
 
     }
 
+    // skal bruges i insertText
     public void insertTextToBitmap(Bitmap image, String gText) {
         Bitmap.Config bitmapConfig = image.getConfig();
         // set default bitmap config if none
