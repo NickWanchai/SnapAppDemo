@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
+    android:onClick="saveProfilPressed"
     tools:context=".MyProfil">
 
     <TextView
@@ -128,12 +129,12 @@
         app:layout_constraintTop_toBottomOf="@+id/myProfil" />
 
     <Button
-        android:id="@+id/SaveProfilPressed"
+        android:id="@+id/saveProfilPressed"
         android:layout_width="98dp"
         android:layout_height="40dp"
         android:layout_marginTop="12dp"
         android:backgroundTint="#F44336"
-        android:onClick="SaveProfilPressed"
+        android:onClick="saveProfilPressed"
         android:text="Gem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

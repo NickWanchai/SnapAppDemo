@@ -9,7 +9,7 @@
     <item
         android:id="@+id/takePicture"
         android:title="Tag Billede"
-        android:icon="@drawable/ic_baseline_person_24"/>
+        android:icon="@drawable/camera"/>
     <item
         android:id="@+id/profil"
         android:title="Profil"

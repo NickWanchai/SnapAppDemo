@@ -19,13 +19,14 @@ import java.util.Map;
 
 public class MyProfil extends AppCompatActivity {
 
-    //redigere i tekst
+    //Edit text for at redigere i tekst
     private EditText usernameEditText, nameEditText, emailEditText, bioEditText;
     private BottomNavigationView navigationView;
 
     //forbindelse til Realtime DB
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference reference = db.getReference().child("Profil");
+
 
     //________________________________________________________________ til at ændre billede
 
@@ -35,19 +36,18 @@ public class MyProfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profil);
 
-        navbar();
-        ShowProfilInfo();
-
         //her initalizere jeg editText til det ID i XML
         usernameEditText = findViewById(R.id.usernameText);
         nameEditText = findViewById(R.id.nameText);
         emailEditText = findViewById(R.id.emailText);
         bioEditText = findViewById(R.id.bioText);
 
+        navbar();
+        showProfilInfo();
+
     }
 
     //___________________ METODER______________________
-
 
     // navigation bar
     private void navbar(){
@@ -77,7 +77,7 @@ public class MyProfil extends AppCompatActivity {
     });
 }
 
-    public void ShowProfilInfo() {
+    public void showProfilInfo() {
         //denne metode er til for at læse fra database
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -108,7 +108,7 @@ public class MyProfil extends AppCompatActivity {
 
 
     // denne metode er til for at gemme data fra felter til DB-realtime
-    public void SaveProfilPressed(View view){
+    public void saveProfilPressed(View view){
         String username = usernameEditText.getText().toString();
         String name = nameEditText.getText().toString();
         String email = emailEditText.getText().toString();
@@ -128,8 +128,6 @@ public class MyProfil extends AppCompatActivity {
 
     //Denne knap skal fører dig til din tagbillede.
     public void ChangePhoto(View view){
-
-
 
     }
 

@@ -53,11 +53,6 @@ public class MainActivity extends AppCompatActivity implements Updatable{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //bruges til info på startside
-        userNameAndName = findViewById(R.id.usernameText2);
-        userInfo = findViewById(R.id.Text3);
-
-
         //vi skal lave en forbindelse til listView her.
         //R kompiler hele tiden, så f.eks hvergang der bliver lavet en knap rekompiler den klassen.
         //Hver gang vi laver noget nyt, bliver et nyt nr(id) klar
@@ -90,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements Updatable{
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+
+                //bruges til info på startside
+                userNameAndName = findViewById(R.id.usernameText2);
+                userInfo = findViewById(R.id.Text3);
 
                 String username = snapshot.child("username").getValue(String.class);
                 String name = snapshot.child("name").getValue(String.class);
