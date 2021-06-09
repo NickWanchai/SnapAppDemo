@@ -16,7 +16,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class MyProfil extends AppCompatActivity {
 
     //Edit text for at redigere i tekst
